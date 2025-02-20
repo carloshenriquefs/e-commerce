@@ -7,6 +7,9 @@ import tech.buildrun.ecommerce.entities.UserEntity;
 import tech.buildrun.ecommerce.repository.BillingAddressRepository;
 import tech.buildrun.ecommerce.repository.UserRepository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class UserService {
 
@@ -33,5 +36,10 @@ public class UserService {
         user.setBillingAddress(savedBillingAddress);
 
         return userRepository.save(user);
+    }
+
+    public Optional<UserEntity> findById(UUID userId) {
+
+        return userRepository.findById(userId);
     }
 }

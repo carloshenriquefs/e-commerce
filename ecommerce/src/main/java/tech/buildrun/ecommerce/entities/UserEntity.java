@@ -2,6 +2,7 @@ package tech.buildrun.ecommerce.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,7 +24,7 @@ public class UserEntity {
     @Column(name = "full_name")
     private String fullName;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "billing_address_id")
     private BillingAddressEntity billingAddress;
 

@@ -1,5 +1,6 @@
 package tech.buildrun.ecommerce.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -24,7 +25,7 @@ public class UserEntity {
     @Column(name = "full_name")
     private String fullName;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "billing_address_id")
     private BillingAddressEntity billingAddress;
 

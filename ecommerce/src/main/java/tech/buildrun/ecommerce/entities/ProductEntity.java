@@ -5,7 +5,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+
+import java.util.List;
 
 import java.math.BigDecimal;
 
@@ -23,6 +29,15 @@ public class ProductEntity {
 
     @Column(name = "price")
     private BigDecimal price;
+
+    @ManyToMany
+    @JoinTable(
+            name = "tb_products_tags",
+            uniqueConstraints = @UniqueConstraint(columnNames = {"product_id", "tag_id"}),
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private List<TagEntity> tags;
 
     public ProductEntity() {
     }
@@ -50,5 +65,13 @@ public class ProductEntity {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public List<TagEntity> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<TagEntity> tags) {
+        this.tags = tags;
     }
 }

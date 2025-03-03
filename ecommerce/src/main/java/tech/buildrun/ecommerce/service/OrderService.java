@@ -1,8 +1,11 @@
 package tech.buildrun.ecommerce.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import tech.buildrun.ecommerce.controller.dto.CreateOrderDto;
 import tech.buildrun.ecommerce.controller.dto.OrderItemDto;
+import tech.buildrun.ecommerce.controller.dto.OrderSummaryDto;
 import tech.buildrun.ecommerce.entities.OrderEntity;
 import tech.buildrun.ecommerce.entities.OrderItemEntity;
 import tech.buildrun.ecommerce.entities.OrderItemId;
@@ -98,4 +101,15 @@ public class OrderService {
                 .orElse(BigDecimal.ZERO);
     }
 
+    public Page<OrderSummaryDto> findAll(Integer page, Integer pageSize) {
+        return orderRepository.findAll(PageRequest.of(page, pageSize))
+                .map(entity -> {
+                    return new OrderSummaryDto(
+                            entity.getOrderId(),
+                            entity.getOrderDate(),
+                            entity.getUser().getUserId(),
+                            entity.getTotal()
+                    );
+                });
+    }
 }
